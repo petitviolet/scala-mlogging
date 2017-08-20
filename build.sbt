@@ -1,6 +1,6 @@
 import sbt.Keys._
 
-val libVersion = "1.0"
+val libVersion = "0.1.0"
 
 val scala = "2.12.2"
 
@@ -27,7 +27,7 @@ lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
 def commonSettings(moduleName: String, _scalaVersion: String = scala) = Seq(
   name := moduleName,
   scalaVersion := _scalaVersion,
-  version := "1.0"
+  version := libVersion
 )
 
 lazy val loggingRoot = (project in file("."))
