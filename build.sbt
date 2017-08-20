@@ -4,6 +4,10 @@ val libVersion = "0.1.0"
 
 val scala = "2.12.2"
 
+val groupId = "net.petitviolet"
+
+crossScalaVersions := Seq("2.11.11", "2.12.2")
+
 // https://github.com/scalameta/sbt-macro-example/blob/master/build.sbt
 lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
@@ -13,11 +17,6 @@ lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
 //    Resolver.ivyStylePatterns),
   resolvers += Resolver.bintrayIvyRepo("scalameta", "maven"),
   addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M9" cross CrossVersion.full),
-  // for old-style macro
-  libraryDependencies ++= Seq(
-    "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-    "org.scala-lang" % "scala-compiler" % scalaVersion.value % "provided"
-  ),
   scalacOptions ++= Seq(
     "-Xplugin-require:macroparadise",
     "-Ymacro-debug-lite"
@@ -25,6 +24,7 @@ lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
 )
 
 def commonSettings(moduleName: String, _scalaVersion: String = scala) = Seq(
+  organization := groupId,
   name := moduleName,
   scalaVersion := _scalaVersion,
   version := libVersion
