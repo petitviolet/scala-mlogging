@@ -6,6 +6,8 @@ val scala = "2.12.2"
 
 val groupId = "net.petitviolet"
 
+val projectName = "logging"
+
 crossScalaVersions := Seq("2.11.11", "2.12.2")
 
 // https://github.com/scalameta/sbt-macro-example/blob/master/build.sbt
@@ -34,7 +36,7 @@ lazy val loggingRoot = (project in file("."))
   .aggregate(logging, sample)
 
 lazy val logging = (project in file("logging"))
-  .settings(commonSettings("logging", scala): _*)
+  .settings(commonSettings(projectName, scala): _*)
   .settings(metaMacroSettings)
   .settings(
     libraryDependencies += "org.scalameta" %% "scalameta" % "1.8.0"
@@ -43,5 +45,6 @@ lazy val logging = (project in file("logging"))
 lazy val sample = (project in file("sample"))
   .settings(commonSettings("sample"): _*)
   .settings(metaMacroSettings)
+//  .settings(libraryDependencies += groupId %% projectName % libVersion)
   .dependsOn(logging)
 
