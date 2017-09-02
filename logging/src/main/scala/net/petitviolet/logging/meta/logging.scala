@@ -24,40 +24,9 @@ class logging(outF: (String) => Unit = println) extends scala.annotation.StaticA
 
 private object logging {
   /**
-   * construct log string for method parameters
-   */
-  private def params(paramss: Seq[Seq[Term.Param]]): Term = {
-    def empty: Term = Lit.String("")
-    paramss.map { params: Seq[Term.Param] =>
-      params
-        .map { p => Term.Name(p.name.value) }
-        .reduceLeftOption { (accN: Term, n: Term) =>
-          // connect with ', ' parameters in the same parenthesis
-          q"$accN + ${Lit.String(", ")} + $n"
-        }.getOrElse { empty }
-    }.reduceLeftOption { (acc: Term, t: Term) =>
-      // connect with close and open parenthesis
-      q"$acc + ${Lit.String(")(")} + $t"
-    }.fold(empty) { t =>
-      // surround with open and close parenthesis
-      q"${Lit.String("(")} + $t + ${Lit.String(")")}"
-    }
-  }
-
-  /**
    * create new method body with logging before and after invoking method
    */
   def newBody(self: Stat)(method: Defn.Def): Term = {
-    val out: Term = self match {
-      case Term.New(Template(_, Seq(Term.Apply(_, Seq(_out: Term.Arg))), _, _)) =>
-        // convert Term.Arg to Term.Name to call `apply`
-        // we cannot get Term.Arg as scala function object
-        Term.Name(_out.syntax)
-      case _ =>
-        // use `println` as default
-        Term.Name("println")
-    }
-    val caller: Term = q"${Lit.String(method.name.value)} + ${params(method.paramss)}"
     // define complicated names, because to avoid use duplicate names which are defined by programmer
     val name4log = Term.Name("logging$methodNameAndParamsForLogging")
     val pat4log = Pat.Var.Term(name4log)
@@ -66,10 +35,10 @@ private object logging {
 
     // let `caller` as a lazy val, for cases of `out` will not be invoked on some environment like production
     q"""
-     lazy val $pat4log: String = $caller
-     $out("[start]" + $name4log)
+     lazy val $pat4log: String = ${caller(method)}
+     ${out(self)}("[start]" + $name4log)
      val $pat4result = ${method.body}
-     $out("[end]" + $name4log + s" => " + $name4result)
+     ${out(self)}("[end]" + $name4log + s" => " + $name4result)
      $name4result
      """
   }
