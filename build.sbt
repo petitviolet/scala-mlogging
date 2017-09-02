@@ -1,6 +1,6 @@
 import sbt.Keys._
 
-val libVersion = "0.1.0"
+val libVersion = "0.2.0"
 
 val scala = "2.12.2"
 
