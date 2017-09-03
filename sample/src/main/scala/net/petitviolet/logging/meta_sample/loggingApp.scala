@@ -1,6 +1,8 @@
-package net.petitviolet.logging.meta
+package net.petitviolet.logging.meta_sample
 
 import java.time.LocalDateTime
+
+import net.petitviolet.logging.meta.{ logging, printing }
 
 object printingApp extends App {
   @printing
