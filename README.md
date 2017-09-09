@@ -4,7 +4,7 @@
 
 This repository provides a `@logging` annotation.
 
-# @logging annotation
+## @logging annotation
 
 This annotation inserts logging before/after invoking annotated method.
 
@@ -29,7 +29,41 @@ Outputs are below.
 > 2017-08-19T23:05:26.308: [end]add(1, 2) => 3  
 > 3
 
-Also see [Samples](https://github.com/petitviolet/scala-logging/blob/master/sample/src/main/scala/net/petitviolet/logging/meta/loggingApp.scala).
+Also see [samples](https://github.com/petitviolet/scala-logging/blob/master/sample/src/main/scala/net/petitviolet/logging/meta/loggingApp.scala).
+
+## @timeLogging annotation
+
+This annotation inserts logging before invoking annotated method with elapsed milli seconds.
+
+```scala
+val logger = new {
+  def info(s: => String): Unit =
+    println(s"${LocalDateTime.now()}: $s")
+}
+
+@timeLogging(logger.info)
+def add(i: Int, j: Int): Int = {
+  i + j
+}
+println(add(1, 2))
+
+@timeLogging(logger.info)
+def add2(i: Int)(j: Int)(): Int = {
+  Thread.sleep(100)
+  i + j
+}
+
+println(add2(2)(3))
+```
+
+> 2017-09-07T09:36:26.335: [start]add(1, 2)  
+> 2017-09-07T09:36:26.400: [end][0 ms]add(1, 2) => 3  
+> 3  
+> 2017-09-07T09:36:26.406: [start]add2(2)(3)()  
+> 2017-09-07T09:36:26.515: [end][107 ms]add2(2)(3)() => 5  
+> 5  
+
+Also see [samples](https://github.com/petitviolet/scala-logging/blob/master/sample/src/main/scala/net/petitviolet/logging/meta_sample/timeLoggingApp.scala).
 
 # setup
 
