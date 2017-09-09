@@ -22,7 +22,6 @@ object timeLoggingApp extends App {
     i + j
   }
 
-  println(add(1, 2))
   println(add2(2)(3))
   val add4: Int => () => Int = add2(4)
   println(add4(5)())
