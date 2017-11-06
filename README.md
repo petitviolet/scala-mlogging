@@ -65,6 +65,50 @@ println(add2(2)(3))
 
 Also see [samples](https://github.com/petitviolet/scala-logging/blob/master/sample/src/main/scala/net/petitviolet/logging/meta_sample/timeLoggingApp.scala).
 
+## logging options
+
+```scala  
+case class User(name: String)
+
+@timeLogging(println, Input)
+def input(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+}
+
+@timeLogging(println, Output)
+def output(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+}
+
+@timeLogging(println, Simple)
+def simple(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+}
+
+@timeLogging(println, Full)
+def full(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+}
+
+simple("simple")
+input("input")
+output("output")
+full("full")
+```
+
+> [start]simple(...)
+> [end][41 ms]simple(...) => (...)
+> [start]input(input)
+> [end][113 ms]input(input) => (...)
+> [start]output(...)
+> [end][32 ms]output(...) => User(output)
+> [start]full(full)
+> [end][160 ms]full(full) => User(full)
+
 # setup
 
 in build.sbt
