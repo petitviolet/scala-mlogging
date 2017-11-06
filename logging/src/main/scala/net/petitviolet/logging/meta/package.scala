@@ -5,7 +5,7 @@ package object meta {
 
   private[meta] def extractLoggingOption(self: Stat): MetaLoggingOption = self match {
     case Term.New(Template(_, Seq(Term.Apply(_,
-    _ +: (optName: Term.Arg) +: _)), _, _)) =>
+      _ +: (optName: Term.Arg) +: _)), _, _)) =>
       val option = MetaLoggingOption.valueOf(optName)
       option
     case _ =>
@@ -14,7 +14,7 @@ package object meta {
 
   private[meta] def out(self: Stat): Term = self match {
     case Term.New(Template(_, Seq(Term.Apply(_,
-    (_out: Term.Arg) +: _)), _, _)) =>
+      (_out: Term.Arg) +: _)), _, _)) =>
       // convert Term.Arg to Term.Name to call `apply`
       // we cannot get Term.Arg as scala function object
       Term.Name(_out.syntax)
@@ -69,10 +69,10 @@ package object meta {
     def valueOf(arg: Term.Arg): MetaLoggingOption = {
       arg.syntax match {
         case "Simple" => Simple
-        case "Full" => Full
-        case "Input" => Input
+        case "Full"   => Full
+        case "Input"  => Input
         case "Output" => Output
-        case _ => abort(s"Unknown option: $arg")
+        case _        => abort(s"Unknown option: $arg")
       }
     }
   }

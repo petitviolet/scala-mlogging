@@ -100,14 +100,14 @@ output("output")
 full("full")
 ```
 
-> [start]simple(...)
-> [end][41 ms]simple(...) => (...)
-> [start]input(input)
-> [end][113 ms]input(input) => (...)
-> [start]output(...)
-> [end][32 ms]output(...) => User(output)
-> [start]full(full)
-> [end][160 ms]full(full) => User(full)
+> [start]simple(...)  
+> [end][41 ms]simple(...) => (...)  
+> [start]input(input)  
+> [end][113 ms]input(input) => (...)  
+> [start]output(...)  
+> [end][32 ms]output(...) => User(output)  
+> [start]full(full)  
+> [end][160 ms]full(full) => User(full)  
 
 # setup
 
