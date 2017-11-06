@@ -1,4 +1,4 @@
-package net.petitviolet.logging.meta
+package net.petitviolet.mlogging.meta
 
 import scala.annotation.compileTimeOnly
 import scala.collection.immutable.Seq

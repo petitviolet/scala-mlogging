@@ -1,38 +1,53 @@
-package net.petitviolet.logging.meta_sample
+package net.petitviolet.mlogging.meta_sample
 
 import java.time.LocalDateTime
 
-import net.petitviolet.logging.meta._
+import net.petitviolet.mlogging.meta._
 
-import scala.util.Random
+object printingApp extends App {
+  @printing
+  private def heavy(n: Int): Int = {
+    Thread.sleep(n)
+    n
+  }
 
-object timeLoggingApp extends App {
+  heavy(100)
+
+  @printing
+  def add(i: Int, j: Int): Int = {
+    i + j
+  }
+
+  println(add(1, 2))
+}
+
+object loggingApp extends App {
   val logger = new {
     def info(s: => String): Unit =
       println(s"${LocalDateTime.now()}: $s")
   }
 
-  @timeLogging(logger.info)
+  @logging(logger.info)
   def add(i: Int, j: Int): Int = {
     i + j
   }
   println(add(1, 2))
 
-  @timeLogging(logger.info)
+  @logging(logger.info)
   def add2(i: Int)(j: Int)(): Int = {
-    Thread.sleep(100)
     i + j
   }
 
+  println(add(1, 2))
   println(add2(2)(3))
   val add4: Int => () => Int = add2(4)
   println(add4(5)())
 
   case class User(name: String) extends AnyVal {
-    @timeLogging(println) def greet(s: String = "")(implicit i: Int): String = s"hello $name! * $i"
+    @logging(println) def greet(s: String = "")(implicit i: Int): String = s"hello $name! * $i"
   }
 
-  @timeLogging
+  @logging
   def create(name: String): User = {
     User(name)
   }
@@ -41,27 +56,23 @@ object timeLoggingApp extends App {
   println(create("Alice"))
   println(create("Alice").greet())
 
-  @timeLogging(println, Input)
+  @logging(println, Input)
   def input(name: String): User = {
-    Thread.sleep(Random.nextInt(200))
     User(name)
   }
 
-  @timeLogging(println, Output)
+  @logging(println, Output)
   def output(name: String): User = {
-    Thread.sleep(Random.nextInt(200))
     User(name)
   }
 
-  @timeLogging(println, Simple)
+  @logging(println, Simple)
   def simple(name: String): User = {
-    Thread.sleep(Random.nextInt(200))
     User(name)
   }
 
-  @timeLogging(println, Full)
+  @logging(println, Full)
   def full(name: String): User = {
-    Thread.sleep(Random.nextInt(200))
     User(name)
   }
 

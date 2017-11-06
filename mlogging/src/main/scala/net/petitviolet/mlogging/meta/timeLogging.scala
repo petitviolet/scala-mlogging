@@ -1,4 +1,4 @@
-package net.petitviolet.logging.meta
+package net.petitviolet.mlogging.meta
 
 import scala.annotation.{ StaticAnnotation, compileTimeOnly }
 import scala.meta._
@@ -41,8 +41,7 @@ private object timeLogging {
      val $pat4Start = $time
      val $pat4result = ${method.body}
      val $pat4End = $time
-     ${out(self)}("[end][" + ($name4End - $name4Start) + " ms]" + $name4log + s" => " +
-        ${showResult(name4result, loggingOption)})
+     ${out(self)}("[end][" + ($name4End - $name4Start) + " ms]" + $name4log + s" => " + ${showResult(name4result, loggingOption)})
      $name4result
      """
   }

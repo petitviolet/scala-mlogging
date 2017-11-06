@@ -6,7 +6,7 @@ val scala = "2.12.2"
 
 val groupId = "net.petitviolet"
 
-val projectName = "logging"
+val projectName = "mlogging"
 
 crossScalaVersions := Seq("2.11.11", "2.12.2", "2.12.3", "2.12.4")
 
@@ -32,10 +32,10 @@ def commonSettings(moduleName: String, _scalaVersion: String = scala) = Seq(
   version := libVersion
 )
 
-lazy val loggingRoot = (project in file("."))
-  .aggregate(logging, sample)
+lazy val mloggingRoot = (project in file("."))
+  .aggregate(mlogging, sample)
 
-lazy val logging = (project in file("logging"))
+lazy val mlogging = (project in file("mlogging"))
   .settings(commonSettings(projectName, scala): _*)
   .settings(metaMacroSettings)
   .settings(
@@ -46,5 +46,5 @@ lazy val sample = (project in file("sample"))
   .settings(commonSettings("sample"): _*)
   .settings(metaMacroSettings)
 //  .settings(libraryDependencies += groupId %% projectName % libVersion)
-  .dependsOn(logging)
+  .dependsOn(mlogging)
 

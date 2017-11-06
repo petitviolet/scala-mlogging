@@ -1,6 +1,6 @@
 # @logging annotation for tracking method input and output
 
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.petitviolet/logging_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.petitviolet/logging_2.12)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.petitviolet/logging_2.12/badge.svg)](https://maven-badges.herokuapp.com/maven-central/net.petitviolet/mlogging_2.12)
 
 This repository provides a `@logging` annotation.
 
@@ -29,7 +29,7 @@ Outputs are below.
 > 2017-08-19T23:05:26.308: [end]add(1, 2) => 3  
 > 3
 
-Also see [samples](https://github.com/petitviolet/scala-logging/blob/master/sample/src/main/scala/net/petitviolet/logging/meta/loggingApp.scala).
+Also see [samples](https://github.com/petitviolet/scala-mlogging/blob/master/sample/src/main/scala/net/petitviolet/mlogging/meta/loggingApp.scala).
 
 ## @timeLogging annotation
 
@@ -63,7 +63,7 @@ println(add2(2)(3))
 > 2017-09-07T09:36:26.515: [end][107 ms]add2(2)(3)() => 5  
 > 5  
 
-Also see [samples](https://github.com/petitviolet/scala-logging/blob/master/sample/src/main/scala/net/petitviolet/logging/meta_sample/timeLoggingApp.scala).
+Also see [samples](https://github.com/petitviolet/scala-mlogging/blob/master/sample/src/main/scala/net/petitviolet/mlogging/meta_sample/timeLoggingApp.scala).
 
 ## logging options
 
@@ -126,7 +126,7 @@ lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
 
 project.settings(
   metaMacroSettings,
-  libraryDependencies += "net.petitviolet" %% "logging" % "<latest-version>"
+  libraryDependencies += "net.petitviolet" %% "mlogging" % "<latest-version>"
 )
 ```
 

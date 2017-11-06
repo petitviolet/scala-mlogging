@@ -1,4 +1,4 @@
-package net.petitviolet.logging
+package net.petitviolet.mlogging
 
 package object meta {
   import scala.meta._
