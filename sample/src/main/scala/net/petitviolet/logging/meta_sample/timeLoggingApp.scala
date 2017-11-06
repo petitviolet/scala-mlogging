@@ -2,7 +2,9 @@ package net.petitviolet.logging.meta_sample
 
 import java.time.LocalDateTime
 
-import net.petitviolet.logging.meta.timeLogging
+import net.petitviolet.logging.meta._
+
+import scala.util.Random
 
 object timeLoggingApp extends App {
   val logger = new {
@@ -38,4 +40,35 @@ object timeLoggingApp extends App {
 
   println(create("Alice"))
   println(create("Alice").greet())
+
+  @timeLogging(println, Input)
+  def input(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+  }
+
+  @timeLogging(println, Output)
+  def output(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+  }
+
+  @timeLogging(println, Simple)
+  def simple(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+  }
+
+  @timeLogging(println, Full)
+  def full(name: String): User = {
+    Thread.sleep(Random.nextInt(200))
+    User(name)
+  }
+
+  println("================")
+
+  simple("simple")
+  input("input")
+  output("output")
+  full("full")
 }

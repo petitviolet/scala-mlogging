@@ -4,7 +4,7 @@ import scala.annotation.{ StaticAnnotation, compileTimeOnly }
 import scala.meta._
 
 @compileTimeOnly("timeLogging not expanded")
-class timeLogging(outF: (String) => Unit = println) extends StaticAnnotation {
+class timeLogging(outF: (String) => Unit = println, option: MetaLoggingOption = Full) extends StaticAnnotation {
   inline def apply(defn: Any): Any = meta {
     defn match {
       case d: Defn.Def =>
@@ -21,6 +21,7 @@ private object timeLogging {
    */
   def newBody(self: Stat)(method: Defn.Def): Term = {
     // define complicated names, because to avoid use duplicate names which are defined by programmer
+    val loggingOption = extractLoggingOption(self)
     val time = q"System.currentTimeMillis"
     val name4log = Term.Name("timeLogging$methodNameAndParamsForLogging")
     val pat4log = Pat.Var.Term(name4log)
@@ -35,12 +36,13 @@ private object timeLogging {
 
     // let `caller` as a lazy val, for cases of `out` will not be invoked on some environment like production
     q"""
-     lazy val $pat4log: String = ${caller(method)}
+     lazy val $pat4log: String = ${caller(method, loggingOption)}
      ${out(self)}("[start]" + $name4log)
      val $pat4Start = $time
      val $pat4result = ${method.body}
      val $pat4End = $time
-     ${out(self)}("[end][" + ($name4End - $name4Start) + " ms]" + $name4log + s" => " + $name4result)
+     ${out(self)}("[end][" + ($name4End - $name4Start) + " ms]" + $name4log + s" => " +
+        ${showResult(name4result, loggingOption)})
      $name4result
      """
   }

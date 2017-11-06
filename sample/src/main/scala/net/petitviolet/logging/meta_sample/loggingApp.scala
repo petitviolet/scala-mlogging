@@ -2,7 +2,7 @@ package net.petitviolet.logging.meta_sample
 
 import java.time.LocalDateTime
 
-import net.petitviolet.logging.meta.{ logging, printing }
+import net.petitviolet.logging.meta._
 
 object printingApp extends App {
   @printing
@@ -55,4 +55,31 @@ object loggingApp extends App {
 
   println(create("Alice"))
   println(create("Alice").greet())
+
+  @logging(println, Input)
+  def input(name: String): User = {
+    User(name)
+  }
+
+  @logging(println, Output)
+  def output(name: String): User = {
+    User(name)
+  }
+
+  @logging(println, Simple)
+  def simple(name: String): User = {
+    User(name)
+  }
+
+  @logging(println, Full)
+  def full(name: String): User = {
+    User(name)
+  }
+
+  println("================")
+
+  simple("simple")
+  input("input")
+  output("output")
+  full("full")
 }
