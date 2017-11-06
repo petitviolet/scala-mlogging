@@ -1,6 +1,6 @@
 import sbt.Keys._
 
-val libVersion = "0.2.0"
+val libVersion = "0.3.0"
 
 val scala = "2.12.2"
 
@@ -8,7 +8,7 @@ val groupId = "net.petitviolet"
 
 val projectName = "logging"
 
-crossScalaVersions := Seq("2.11.11", "2.12.2")
+crossScalaVersions := Seq("2.11.11", "2.12.2", "2.12.3", "2.12.4")
 
 // https://github.com/scalameta/sbt-macro-example/blob/master/build.sbt
 lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
