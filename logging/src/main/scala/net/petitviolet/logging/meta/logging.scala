@@ -10,7 +10,7 @@ import scala.meta._
  * @param outF a function for logging message
  */
 @compileTimeOnly("logging annotation")
-class logging(outF: (String) => Unit = println) extends scala.annotation.StaticAnnotation {
+class logging(outF: (String) => Unit = println, option: MetaLoggingOption = Full) extends scala.annotation.StaticAnnotation {
   inline def apply(defn: Any): Any = meta {
     defn match {
       case d: Defn.Def =>
@@ -28,6 +28,7 @@ private object logging {
    */
   def newBody(self: Stat)(method: Defn.Def): Term = {
     // define complicated names, because to avoid use duplicate names which are defined by programmer
+    val loggingOption = extractLoggingOption(self)
     val name4log = Term.Name("logging$methodNameAndParamsForLogging")
     val pat4log = Pat.Var.Term(name4log)
     val name4result = Term.Name("logging$resultOfMethod")
@@ -35,10 +36,10 @@ private object logging {
 
     // let `caller` as a lazy val, for cases of `out` will not be invoked on some environment like production
     q"""
-     lazy val $pat4log: String = ${caller(method)}
+     lazy val $pat4log: String = ${caller(method, loggingOption)}
      ${out(self)}("[start]" + $name4log)
      val $pat4result = ${method.body}
-     ${out(self)}("[end]" + $name4log + s" => " + $name4result)
+     ${out(self)}("[end]" + $name4log + s" => " + ${showResult(name4result, loggingOption)})
      $name4result
      """
   }
