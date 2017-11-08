@@ -1,14 +1,12 @@
 import sbt.Keys._
 
-val libVersion = "0.3.0"
+val libVersion = "0.3.1"
 
-val scala = "2.12.2"
+val scala = "2.12.4"
 
 val groupId = "net.petitviolet"
 
 val projectName = "mlogging"
-
-crossScalaVersions := Seq("2.11.11", "2.12.2", "2.12.3", "2.12.4")
 
 // https://github.com/scalameta/sbt-macro-example/blob/master/build.sbt
 lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
@@ -18,7 +16,7 @@ lazy val metaMacroSettings: Seq[Def.Setting[_]] = Seq(
 //    url("http://dl.bintray.com/content/sbt/sbt-plugin-releases"))(
 //    Resolver.ivyStylePatterns),
   resolvers += Resolver.bintrayIvyRepo("scalameta", "maven"),
-  addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M9" cross CrossVersion.full),
+  addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),
   scalacOptions ++= Seq(
     "-Xplugin-require:macroparadise",
     "-Ymacro-debug-lite"
@@ -39,6 +37,7 @@ lazy val mlogging = (project in file("mlogging"))
   .settings(commonSettings(projectName, scala): _*)
   .settings(metaMacroSettings)
   .settings(
+    crossScalaVersions := Seq("2.11.11", "2.12.4"),
     libraryDependencies += "org.scalameta" %% "scalameta" % "1.8.0"
   )
 

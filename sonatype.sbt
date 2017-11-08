@@ -14,11 +14,11 @@ publishTo := {
 
 // License of your choice
 licenses := Seq("MIT" -> url("https://petitviolet.mit-license.org/"))
-homepage := Some(url("https://github.com/petitviolet/scala-logging"))
+homepage := Some(url("https://github.com/petitviolet/scala-mlogging"))
 scmInfo := Some(
   ScmInfo(
-    url("https://github.com/petitviolet/scala-logging"),
-    "scm:git@github.com:petitviolet/scala-logging.git"
+    url("https://github.com/petitviolet/scala-mlogging"),
+    "scm:git@github.com:petitviolet/scala-mlogging.git"
   )
 )
 developers := List(
@@ -31,7 +31,7 @@ developers := List(
 )
 
 pomExtra in Global := {
-  <url>https://github.com/petitviolet/scala-logging</url>
+  <url>https://github.com/petitviolet/scala-mlogging</url>
     <licenses>
       <license>
         <name>MIT</name>
@@ -39,9 +39,9 @@ pomExtra in Global := {
       </license>
     </licenses>
     <scm>
-      <connection>scm:git:github.com/petitviolet/scala-logging</connection>
-      <developerConnection>scm:git:git@github.com:petitviolet/scala-logging</developerConnection>
-      <url>github.com/petitviolet/scala-logging</url>
+      <connection>scm:git:github.com/petitviolet/scala-mlogging</connection>
+      <developerConnection>scm:git:git@github.com:petitviolet/scala-mlogging</developerConnection>
+      <url>github.com/petitviolet/scala-mlogging</url>
     </scm>
     <developers>
       <developer>
